@@ -1,0 +1,51 @@
+<!--Gabriel Garcia - Z23643475 - garciag2022@fau.edu-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="./scripts.js" defer></script>
+        <title>View Student</title>
+    </head>
+    <body onload="lastnameStudent()">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="..">Student Registration System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./add.html">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./update.html">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./view.html">View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./delete.html">Delete</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./list.html">List</a>
+                    </li>
+                </ul>
+                <form class="form-inline ml-auto">
+                    <input class="form-control" id="lastname" type="text" placeholder="Last Name">
+                    <button class="btn btn-outline-success" onclick="lastnameSearch()" type="button">Search</button>
+                </form>
+            </div>
+        </nav>
+        <h1 id="studentLastname"></h1>
+        <textarea id="output" rows="20" cols="40" readonly></textarea>
+    </body>
+    <footer>
+        <p>Gabriel Garcia • Z23643475</p>
+    </footer>
+</html>
