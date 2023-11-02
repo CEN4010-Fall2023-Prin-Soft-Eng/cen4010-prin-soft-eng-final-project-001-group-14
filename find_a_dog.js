@@ -1,4 +1,4 @@
-// Gabriel Garcia - Z23643475
+// Group 14
 // CEN 4010-001 - Dr. David Jaramillo
 // documentation.js
 // 11/02/23
