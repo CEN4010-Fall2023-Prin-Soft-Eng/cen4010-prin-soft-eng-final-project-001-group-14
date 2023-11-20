@@ -29,6 +29,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('./public'));
 
+let petFinderAuthURL = "https://api.petfinder.com/v2/oauth2/token";
+let petFinderQueryURL = "https://api.petfinder.com/v2/animals";
+
 /**
  * @swagger
  * /accounts:
@@ -210,7 +213,11 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *       404:
  *         description: Error. Could not enumerate list of nearby dogs.
  */
-app.get('/dogs', function (req, res) {});
+app.get('/dogs', function (req, res) {
+  $.ajax({
+
+  })
+});
 
 /**
  * @swagger
