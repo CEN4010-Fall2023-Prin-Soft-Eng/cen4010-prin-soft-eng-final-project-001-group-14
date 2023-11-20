@@ -2,10 +2,10 @@
   "name": "herokudemo",
   "version": "1.0.0",
   "description": "",
-  "main": "studentserver.js",
+  "main": "find_a_dog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node studentserver.js"
+    "start": "node find_a_dog.js"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
