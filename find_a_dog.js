@@ -215,7 +215,7 @@ app.put('/accounts/:account_ID', function (req, res) {})
  */
 app.get('/dogs', function (req, res) {
   $.ajax({
-
+    
   })
 });
 
