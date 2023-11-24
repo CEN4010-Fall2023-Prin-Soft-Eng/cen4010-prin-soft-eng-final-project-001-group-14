@@ -7,8 +7,11 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const glob = require("glob");
+const glob = require('glob');
 const { type } = require('os');
+const http = require('node:http');
+const OAuth = require('oauth');
+const axios = require('axios');
 
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
@@ -29,8 +32,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('./public'));
 
-let petFinderAuthURL = "https://api.petfinder.com/v2/oauth2/token";
-let petFinderQueryURL = "https://api.petfinder.com/v2/animals";
+let petFinderToken = "";
+let petFinderTokenExpTime = -1;
+
+async function GetPetFinderToken() {
+  if (petFinderTokenExpTime == -1 || petFinderTokenExpTime >= Date.now()) {
+    let data = await axios.post("https://api.petfinder.com/v2/oauth2/token", {
+      grant_type: "client_credentials",
+      client_id: "gsGbJlyFiOUnXaOrOjcAphygIas5Mkk3UqbieAjOQhsOmOdBS5",
+      client_secret: "uxXY2ZxIk7oWwQZ17auA5jC49i2vyVIMD7BlNbMV"
+    });
+
+    // Set the experation time to now + (experation duration in seconds - 10 seconds).
+    petFinderTokenExpTime = Date.now() + ((data.data.expires_in - 10) * 1000); // Convert to milliseconds.
+    petFinderToken = data.data.access_token;
+  }
+
+  return petFinderToken;
+}
 
 /**
  * @swagger
@@ -167,43 +186,43 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *     parameters:
  *       - name: radius
  *         description: The radius the user wishes to search in.
- *         in: formData
+ *         in: query
  *         required: true
  *         schema:
  *           type: string
  *       - name: breed
  *         description: The user's breed preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
  *       - name: sex
  *         description: The user's dog sex preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
  *       - name: min_age
  *         description: The user's dog minimum age preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
  *       - name: max_age
  *         description: The user's dog maximum age preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
  *       - name: size
  *         description: The user's dog size preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
  *       - name: color
  *         description: The user's dog color preference.
- *         in: formData
+ *         in: query
  *         required: false
  *         schema:
  *           type: string
@@ -214,9 +233,8 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *         description: Error. Could not enumerate list of nearby dogs.
  */
 app.get('/dogs', function (req, res) {
-  $.ajax({
-    
-  })
+  let token = GetPetFinderToken();
+  return;
 });
 
 /**
