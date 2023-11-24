@@ -34,10 +34,11 @@ app.use(express.static('./public'));
 
 let petFinderToken = "";
 let petFinderTokenExpTime = -1;
+let petFinderURL = "https://api.petfinder.com/v2";
 
 async function GetPetFinderToken() {
   if (petFinderTokenExpTime == -1 || petFinderTokenExpTime >= Date.now()) {
-    let data = await axios.post("https://api.petfinder.com/v2/oauth2/token", {
+    let data = await axios.post(`${petFinderURL}/oauth2/token`, {
       grant_type: "client_credentials",
       client_id: "gsGbJlyFiOUnXaOrOjcAphygIas5Mkk3UqbieAjOQhsOmOdBS5",
       client_secret: "uxXY2ZxIk7oWwQZ17auA5jC49i2vyVIMD7BlNbMV"
@@ -234,7 +235,42 @@ app.put('/accounts/:account_ID', function (req, res) {})
  */
 app.get('/dogs', function (req, res) {
   let token = GetPetFinderToken();
-  return;
+  let petFinderRequest = `${petFinderURL}/animals?type=dog&radius=${req.query.radius}`;
+  if (req.query.hasOwnProperty("breed"))
+    petFinderRequest += `&breed=${req.query.breed}`;
+  if (req.query.hasOwnProperty("sex"))
+    petFinderRequest += `&gender=${req.query.sex}`;
+  if (req.query.hasOwnProperty("size"))
+    petFinderRequest += `&size=${req.query.size}`;
+  if (req.query.hasOwnProperty("color"))
+    petFinderRequest += `&color=${req.query.color}`;
+  
+  if (req.query.hasOwnProperty("min_age") || req.query.hasOwnProperty("max_age")) {
+    let min_age = 0, max_age = 0;
+    if (req.query.hasOwnProperty("min_age"))
+      min_age = parseInt(req.query.min_age);
+    if (req.query.hasOwnProperty("max_age"))
+      max_age = parseInt(req.query.max_age);
+
+    if (min_age > max_age)
+      max_age = min_age;
+
+    petFinderRequest += "&age=";
+    if (min_age < 2 && max_age < 2)
+      petFinderRequest += "baby,young";
+    else if (min_age < 2 && max_age < 9)
+      petFinderRequest += "baby,young,adult"; 
+    else if (min_age >= 2 && max_age < 9)
+      petFinderRequest += "adult";
+    else if (min_age >= 2 && max_age >= 9)
+      petFinderRequest += "adult,senior";
+    else if (min_age >= 9 && max_age >= 9)
+      petFinderRequest += "senior";
+    else
+      petFinderRequest += "baby,young,adult,senior"; 
+  }
+
+  axios.get(`${petFinderURL}/dogs`)
 });
 
 /**
