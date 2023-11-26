@@ -203,14 +203,8 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *         required: false
  *         schema:
  *           type: string
- *       - name: min_age
- *         description: The user's dog minimum age preference.
- *         in: query
- *         required: false
- *         schema:
- *           type: string
- *       - name: max_age
- *         description: The user's dog maximum age preference.
+ *       - name: age
+ *         description: The user's dog age preference.
  *         in: query
  *         required: false
  *         schema:
@@ -235,42 +229,33 @@ app.put('/accounts/:account_ID', function (req, res) {})
  */
 app.get('/dogs', function (req, res) {
   let token = GetPetFinderToken();
+  
   let petFinderRequest = `${petFinderURL}/animals?type=dog&radius=${req.query.radius}`;
   if (req.query.hasOwnProperty("breed"))
     petFinderRequest += `&breed=${req.query.breed}`;
   if (req.query.hasOwnProperty("sex"))
     petFinderRequest += `&gender=${req.query.sex}`;
+  if (req.query.hasOwnProperty("age"))
+    petFinderRequest += `&age=${req.query.age}`;
   if (req.query.hasOwnProperty("size"))
     petFinderRequest += `&size=${req.query.size}`;
   if (req.query.hasOwnProperty("color"))
     petFinderRequest += `&color=${req.query.color}`;
-  
-  if (req.query.hasOwnProperty("min_age") || req.query.hasOwnProperty("max_age")) {
-    let min_age = 0, max_age = 0;
-    if (req.query.hasOwnProperty("min_age"))
-      min_age = parseInt(req.query.min_age);
-    if (req.query.hasOwnProperty("max_age"))
-      max_age = parseInt(req.query.max_age);
 
-    if (min_age > max_age)
-      max_age = min_age;
+  let requestResponse = null;
+  axios.get(petFinderRequest, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    requestResponse = response;
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
-    petFinderRequest += "&age=";
-    if (min_age < 2 && max_age < 2)
-      petFinderRequest += "baby,young";
-    else if (min_age < 2 && max_age < 9)
-      petFinderRequest += "baby,young,adult"; 
-    else if (min_age >= 2 && max_age < 9)
-      petFinderRequest += "adult";
-    else if (min_age >= 2 && max_age >= 9)
-      petFinderRequest += "adult,senior";
-    else if (min_age >= 9 && max_age >= 9)
-      petFinderRequest += "senior";
-    else
-      petFinderRequest += "baby,young,adult,senior"; 
-  }
-
-  axios.get(`${petFinderURL}/dogs`)
+  return;
 });
 
 /**
