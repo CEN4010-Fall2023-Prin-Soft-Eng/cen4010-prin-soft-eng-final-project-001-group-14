@@ -228,34 +228,35 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *         description: Error. Could not enumerate list of nearby dogs.
  */
 app.get('/dogs', function (req, res) {
-  let token = GetPetFinderToken();
-  
-  let petFinderRequest = `${petFinderURL}/animals?type=dog&radius=${req.query.radius}`;
-  if (req.query.hasOwnProperty("breed"))
-    petFinderRequest += `&breed=${req.query.breed}`;
-  if (req.query.hasOwnProperty("sex"))
-    petFinderRequest += `&gender=${req.query.sex}`;
-  if (req.query.hasOwnProperty("age"))
-    petFinderRequest += `&age=${req.query.age}`;
-  if (req.query.hasOwnProperty("size"))
-    petFinderRequest += `&size=${req.query.size}`;
-  if (req.query.hasOwnProperty("color"))
-    petFinderRequest += `&color=${req.query.color}`;
+  GetPetFinderToken().then(token => {
+    let petFinderRequest = `${petFinderURL}/animals?type=dog&radius=${req.query.radius}`;
+    if (req.query.hasOwnProperty("breed"))
+      petFinderRequest += `&breed=${req.query.breed}`;
+    if (req.query.hasOwnProperty("sex"))
+      petFinderRequest += `&gender=${req.query.sex}`;
+    if (req.query.hasOwnProperty("age"))
+      petFinderRequest += `&age=${req.query.age}`;
+    if (req.query.hasOwnProperty("size"))
+      petFinderRequest += `&size=${req.query.size}`;
+    if (req.query.hasOwnProperty("color"))
+      petFinderRequest += `&color=${req.query.color}`;
 
-  let requestResponse = null;
-  axios.get(petFinderRequest, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  .then(response => {
-    requestResponse = response;
+    let requestResponse = null;
+    let output = axios.get(petFinderRequest, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      res.status(200).send(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   })
   .catch(error => {
     console.error(error);
   });
-
-  return;
 });
 
 /**
