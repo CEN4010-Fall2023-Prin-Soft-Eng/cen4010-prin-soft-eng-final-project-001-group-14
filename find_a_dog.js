@@ -3,8 +3,10 @@
 // documentation.js
 // 11/02/23
 
+const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
+
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const glob = require('glob');
@@ -280,8 +282,25 @@ app.get('/dogs', function (req, res) {
  */
 app.get('/dogs/:dog_ID', function (req, res) {});
 
-var port = process.env.PORT || 5678;
-app.listen(port); //start the server
-console.log('Server is running...');
-console.log('Webapp:   http://localhost:5678/')
-console.log('API Docs: http://localhost:5678/api-docs')
+// MongoDB Connection
+const uri = "mongodb+srv://dogDbUser:<password>@findadog.q0uwgbr.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log("MongoDB connected");
+
+      // starting express server in block of mongoose.connect to ensure proper connection
+      const port = process.env.PORT || 5678;
+      app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+        console.log('Webapp: http://localhost:' + port + '/');
+        console.log('API Docs: http://localhost:' + port + '/api-docs');
+      });
+    })
+    .catch(err => console.log(err));
+
+// commented out and moved into mongoose.connect block as db needs to be functional before server starts
+// var port = process.env.PORT || 5678;
+// app.listen(port); //start the server
+// console.log('Server is running...');
+// console.log('Webapp:   http://localhost:5678/')
+// console.log('API Docs: http://localhost:5678/api-docs')
