@@ -229,6 +229,9 @@ app.put('/accounts/:account_ID', function (req, res) {})
  */
 app.get('/dogs', function (req, res) {
   GetPetFinderToken().then(token => {
+    if (!req.query.hasOwnProperty("radius"))
+      throw new Error("radius query entry missing");
+
     let petFinderRequest = `${petFinderURL}/animals?type=dog&radius=${req.query.radius}`;
     if (req.query.hasOwnProperty("breed"))
       petFinderRequest += `&breed=${req.query.breed}`;
@@ -241,8 +244,7 @@ app.get('/dogs', function (req, res) {
     if (req.query.hasOwnProperty("color"))
       petFinderRequest += `&color=${req.query.color}`;
 
-    let requestResponse = null;
-    let output = axios.get(petFinderRequest, {
+    axios.get(petFinderRequest, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -251,10 +253,12 @@ app.get('/dogs', function (req, res) {
       res.status(200).send(response.data);
     })
     .catch(error => {
+      res.status(404).send(error.message);
       console.error(error);
     });
   })
   .catch(error => {
+    res.status(404).send(error.message);
     console.error(error);
   });
 });
@@ -268,7 +272,7 @@ app.get('/dogs', function (req, res) {
  *     parameters:
  *       - name: dog_ID
  *         description: The ID associated with a dog.
- *         in: path
+ *         in: query
  *         required: true
  *         schema:
  *           type: string            
@@ -278,7 +282,29 @@ app.get('/dogs', function (req, res) {
  *       404:
  *         description: Error. Could not find the dog associated with this ID.
  */
-app.get('/dogs/:dog_ID', function (req, res) {});
+app.get('/dogs/:dog_ID', function (req, res) {
+  if (!req.query.hasOwnProperty("dog_ID"))
+    throw new Error("dog_ID query entry missing.");
+  
+  GetPetFinderToken().then(token => {
+    axios.get(`${petFinderURL}/animals/${req.query.dog_ID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      res.status(200).send(response.data);
+    })
+    .catch(error => {
+      res.status(404).send(error.message);
+      console.error(error);
+    })
+  })
+  .catch(error => {
+    res.status(404).send(error.message);
+    console.error(error);
+  });
+});
 
 var port = process.env.PORT || 5678;
 app.listen(port); //start the server
