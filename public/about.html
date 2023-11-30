@@ -1,5 +1,47 @@
 <!DOCTYPE html>
 <html>
+<!-- Make sure to include Font Awesome in your HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  /* CSS for the search box */
+  .search-box {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  .search-box input[type="search"] {
+    background: transparent;
+    border: 2px solid #000000;
+    /*border-bottom: 5px solid #000000;*/
+    color: #ffffff;
+    width: 0;
+    padding: 10px;
+    transition: width 0.4s ease-in-out;
+    margin-right: 10px;
+  }
+
+  .search-box input[type="search"]::placeholder {
+    color: #fff; 
+  }
+
+  .search-box input[type="search"]:focus {
+    width: 200px; /* Adjust width as needed */
+    outline: none;
+  }
+
+  .search-box .btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    transition: color 0.4s ease-in-out;
+  }
+
+  .search-box .btn:hover {
+    color: #000000;
+  }
+</style>
 
 <head>
   <!-- Basic -->
@@ -43,7 +85,7 @@
             <a href="" class="contact_link1">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
-                FInd A Dog
+                Find Your Dog
               </span>
             </a>
             <a href="" class="contact_link2">
@@ -81,6 +123,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="DogList.html">Dog List</a>
                 </li>
+                <li class="nav-item">
+                  <form class="form-inline my-2 my-lg-0">
+                    <div class="search-box">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                  </form>
+                </li>
               </ul>
             </div>
           </nav>
@@ -112,11 +162,11 @@
             <p>
               This is a simple made website to allow users to find a dog they like. It uses a tinder like user interface to help users find a dog of their liking.
             </p>
-            <div class="btn-box">
+            <!--<div class="btn-box">
               <a href="">
                 Read More
               </a>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
