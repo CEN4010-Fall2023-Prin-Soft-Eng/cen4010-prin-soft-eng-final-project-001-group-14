@@ -79,6 +79,22 @@ button:hover{
 	transform: scale(.4);
 }
 
+.home-button {
+    position: absolute; /* Position relative to the browser window */
+    top: 10px; /* Adjust top position */
+    right: 10px; /* Adjust right position */
+    width: 20%;
+	height: 20px;
+	margin: 10px;
+	justify-content: right;
+}
+/* Additional styles for the Home button link */
+.home-button a {
+    text-decoration: none; /* Remove underline */
+    color: #ffffff; /* Set color */
+    /* Additional link styles */
+}
+
 #chk:checked ~ .login{
 	transform: translateY(-550px);
 }
