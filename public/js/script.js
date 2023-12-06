@@ -1,44 +1,65 @@
+// script.js
+
 // DOM
 const swiper = document.querySelector('#swiper');
 const like = document.querySelector('#like');
 const dislike = document.querySelector('#dislike');
 
 // constants
-const urls = [
-  'https://source.unsplash.com/random/1000x1000/?sky',
-  'https://source.unsplash.com/random/1000x1000/?landscape',
-  'https://source.unsplash.com/random/1000x1000/?ocean',
-  'https://source.unsplash.com/random/1000x1000/?moutain',
-  'https://source.unsplash.com/random/1000x1000/?forest'
-];
+const apiUrl = 'https://api.petfinder.com/v2'; // Update this URL based on your API endpoint
 
-// variables
-let cardCount = 0;
+async function fetchDogData(zip, radius, set) {
+  try {
+    // Construct the API URL with user input
+    const url = `${apiUrl}?zip_code=${zip}&radius=${radius}&set=${set}`;
 
-// functions
-function appendNewCard() {
-  const card = new Card({
-    imageUrl: urls[cardCount % 5],
-    onDismiss: appendNewCard,
-    onLike: () => {
-      like.style.animationPlayState = 'running';
-      like.classList.toggle('trigger');
-    },
-    onDislike: () => {
-      dislike.style.animationPlayState = 'running';
-      dislike.classList.toggle('trigger');
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // Check if there is data
+    if (data.length > 0) {
+      // Display the first dog's information on the card
+      const card = new Card({
+        imageUrl: data[0].photoURL,
+        onDismiss: () => {
+          // Call fetchDogData again with the next set when the card is dismissed
+          fetchDogData(zip, radius, parseInt(set) + 1);
+        },
+        onLike: () => {
+          like.style.animationPlayState = 'running';
+          like.classList.toggle('trigger');
+        },
+        onDislike: () => {
+          dislike.style.animationPlayState = 'running';
+          dislike.classList.toggle('trigger');
+        }
+      });
+
+      // Update dog information inside the card
+      const dogInfo = card.element.querySelector('.dog-info');
+      dogInfo.querySelector('.dog-name').textContent = data[0].name;
+      dogInfo.querySelector('.dog-age').textContent = `Age: ${data[0].age}`;
+      dogInfo.querySelector('.dog-description').textContent = data[0].description;
+
+      swiper.append(card.element);
+    } else {
+      // Handle case when no dogs are returned
+      console.log('No dogs found.');
     }
-  });
-  swiper.append(card.element);
-  cardCount++;
-
-  const cards = swiper.querySelectorAll('.card:not(.dismissing)');
-  cards.forEach((card, index) => {
-    card.style.setProperty('--i', index);
-  });
+  } catch (error) {
+    console.error('Error fetching dog data:', error);
+  }
 }
 
-// first 5 cards
-for (let i = 0; i < 5; i++) {
-  appendNewCard();
-}
+// Attach fetchDogData function to the form submission
+document.getElementById('pet-form').addEventListener('submit', function (event) {
+  event.preventDefault();
+  
+  // Get user input from the form
+  const zip = document.getElementById('zip').value;
+  const radius = document.getElementById('radius').value;
+  const set = document.getElementById('set').value;
+
+  // Call fetchDogData with user input
+  fetchDogData(zip, radius, set);
+});

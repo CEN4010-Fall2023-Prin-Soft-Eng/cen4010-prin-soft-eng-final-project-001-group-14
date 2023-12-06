@@ -144,7 +144,6 @@
       color: #ffffff;
       border-color: #ffffff;
     }
-    
     .favorited-dogs {
       text-align: center;
       margin-top: 20px; /* Add margin-top for spacing */
@@ -230,7 +229,7 @@
         favoritedDogs = favoritedDogs.filter(function (dog) {
           return dog.id !== dogId;
         });
-      
+    
         // Save the updated favoritedDogs array to localStorage
         saveToLocalStorage();
     
@@ -245,15 +244,12 @@
         // Remove previous event listener to avoid multiple bindings
         dropdown.off('change');
     
-         // Clear the dropdown before updating
-        dropdown.empty();
-
         // Add a default option
         dropdown.append('<option value="" disabled selected>Select a dog</option>');
     
         // Populate the dropdown with favorited dog data
         favoritedDogs.forEach(function (dog) {
-          dropdown.append('<option value="' + dog.id + '">' + dog.name + '</option>');
+          dropdown.append('<option value="' + dog.id + '">' + dog.name + ' - ' + dog.webpage + '</option>');
         });
     
         // Add event listener to navigate to the selected dog's webpage in a new tab
@@ -331,7 +327,7 @@
                     <p class="card-text">Age: ${dog.age}</p>
                     <p class="card-text">Sex: ${dog.sex}</p>
                     <p class="card-text overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Description: ${dog.description}</p>
-                    <a href="${dog.webpage}" class="btn btn-primary" target="_blank">Learn More</a>
+                    <a href="${dog.webpage}" class="btn btn-primary">Learn More</a>
                     <!-- Add Favorite button with a click event handler -->
                     <button class="btn btn-outline-danger btn-favorite" data-dog-id="${dog.id}">Favorite</button>
                   </div>
@@ -366,7 +362,6 @@
           });
       });
     });
-    
   </script>
 </head>
 
