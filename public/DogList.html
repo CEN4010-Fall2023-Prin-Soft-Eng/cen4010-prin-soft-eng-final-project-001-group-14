@@ -172,7 +172,7 @@
 
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
               <ul class="navbar-nav  ">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -180,9 +180,6 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="FindADog.html"> Find Your Dog </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="DogList.html">Dog List</a>
                 </li>
                 <li class="nav-item">
                   <form class="form-inline my-2 my-lg-0">
@@ -200,47 +197,60 @@
     </header>
     <!-- end header section -->
     <!-- slider section -->
-                  <div class="detail-box">
-                    <h1 text-align: center>
-                      Your List
-                      <span>
-                      </span>
-                    </h1>
-                    <p>
-                      The dogs you have favorited are listed here for you to view 
-                    </p>
-                    <!--Dropdown menu-->
-                    <div class="dropdown">
-                      <button class="dropbtn">List</button>
-                      <div class="dropdown-content">
-                        <a href="#">Dog 1</a>
-                        <a href="#">Dog 2</a>
-                        <a href="#">Dog 3</a>
-                      </div>
-                    </div>
+    <div class="detail-box">
+        <h1 style="text-align: center">Dog Search</h1>
+        <p>Input a valid Dog ID in the search bar to view a dog</p>
+
+        <!-- Display dog details in cards -->
+        <div class="dog-cards-container">
+            <!-- Cards will be dynamically added here -->
         </div>
-        <div class="container idicator_container">
-          <ol class="carousel-indicators">
-         
-          </ol>
-        </div>
-      </div>
-    </section>
-    <!-- end slider section -->
-  </div>
+    </div>
 
- 
-  
+    <script>
+        // Simulated dog data - Replace this with your API call or data retrieval logic
+        const dogData = {
+            "Dog 1": { name: "Dog 1", breed: "Breed 1", age: "3 years", description: "Description of Dog 1" },
+            "Dog 2": { name: "Dog 2", breed: "Breed 2", age: "2 years", description: "Description of Dog 2" },
+            "Dog 3": { name: "Dog 3", breed: "Breed 3", age: "4 years", description: "Description of Dog 3" }
+            // Add more dogs or retrieve from an API
+        };
 
+        // Function to create dog cards
+        function createDogCard(dog) {
+            const card = document.createElement('div');
+            card.classList.add('dog-card');
 
+            const cardContent = `
+                <h2>${dog.name}</h2>
+                <p>Breed: ${dog.breed}</p>
+                <p>Age: ${dog.age}</p>
+                <p>Description: ${dog.description}</p>
+            `;
 
+            card.innerHTML = cardContent;
+            return card;
+        }
 
+        // Function to display dog details in cards based on Dog_ID
+        function displayDogDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dogId = urlParams.get('dogID');
 
+            const dogContainer = document.querySelector('.dog-cards-container');
 
+            if (dogData[dogId]) {
+                const dogCard = createDogCard(dogData[dogId]);
+                dogContainer.appendChild(dogCard);
+            } else {
+                const errorCard = document.createElement('div');
+                errorCard.textContent = 'Dog not found';
+                dogContainer.appendChild(errorCard);
+            }
+        }
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="js/custom.js"></script>
+        // Call the function to display dog details when the page loads
+        displayDogDetails();
+    </script>
 </body>
-
 </html>
