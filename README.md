@@ -11,6 +11,8 @@
 
 Welcome to Group 14's Find-A-Dog, a web application crafted with Node.js, Bootstrap, and MongoDB. Our platform is designed to assist users in finding their ideal furry companions. Whether you're eager to adopt a dog or simply want to explore a gallery of adorable pups, Find-A-Dog is here to make the process easy and enjoyable.
 
+You can access the webpage at https://findadog-659d07ee3c36.herokuapp.com
+
 ## Features
 
 - **Search and Filter**: Effortlessly find dogs based on various criteria, including breed, size, age, and location.
