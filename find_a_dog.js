@@ -369,8 +369,8 @@ app.get('/dogs/:dog_ID', function (req, res) {
 });
 
 // // MongoDB Connection
-const uri = "mongodb+srv://dogDbUser:<password>@findadog.q0uwgbr.mongodb.net/?retryWrites=true&w=majority";
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+const uri = "mongodb+srv://dogDbUser:E7fkiBoK1tpbzoX7@findadog.q0uwgbr.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(uri)
     .then(() => {
       console.log("MongoDB connected");
 
