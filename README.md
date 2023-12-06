@@ -56,11 +56,3 @@ Before getting started, make sure you have the following installed on your machi
    ```
 
    The application will be accessible at [http://localhost:5678](http://localhost:5678).
-
-## Contributing
-
-We appreciate contributions to enhance Find-A-Dog! To contribute, please follow our [contribution guidelines](CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
