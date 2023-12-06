@@ -1,5 +1,47 @@
 <!DOCTYPE html>
 <html>
+<!-- Make sure to include Font Awesome in your HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  /* CSS for the search box */
+  .search-box {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  .search-box input[type="search"] {
+    background: transparent;
+    border: 2px solid #000000;
+    /*border-bottom: 5px solid #000000;*/
+    color: #ffffff;
+    width: 0;
+    padding: 10px;
+    transition: width 0.4s ease-in-out;
+    margin-right: 10px;
+  }
+
+  .search-box input[type="search"]::placeholder {
+    color: #fff; 
+  }
+
+  .search-box input[type="search"]:focus {
+    width: 200px; /* Adjust width as needed */
+    outline: none;
+  }
+
+  .search-box .btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    transition: color 0.4s ease-in-out;
+  }
+
+  .search-box .btn:hover {
+    color: #000000;
+  }
+</style>
 
 <head>
   <!-- Basic -->
@@ -87,6 +129,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="DogList.html">Dog List</a>
                 </li>
+                <li class="nav-item">
+                  <form class="form-inline my-2 my-lg-0">
+                    <div class="search-box">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                  </form>
+                </li>
               </ul>
             </div>
           </nav>
@@ -109,7 +159,7 @@
                       </span>
                     </h1>
                     <p>
-                      This website allows you to find a dog of your liking, just swipe left or right.
+                      Dogs will be categorized by breed, gender, and age to help you find the perfect dog.  
                     </p>
                     <div class="btn-box">
                       
@@ -125,11 +175,11 @@
                 <div class="col-md-7">
                   <div class="detail-box">
                     <h1>
-                      Every Dog Needs an owner <br>
+                       Bring home a dog<br>
                      
                     </h1>
                     <p>
-                      There are plenty of dogs out there waiting for someone an owner to show them love like they deserve.
+                      All dogs deserve a place to call home, as well as a loving and affectionate family. 
                     </p>
                     <div class="btn-box">
                      
@@ -149,7 +199,7 @@
                      
                     </h1>
                     <p>
-                      EZ
+                      The website follows a tinder like format, swipe left to skip, or right if you like the dog. Click the Favorite button to save the dog. 
                     </p>
                     <div class="btn-box">
                      
