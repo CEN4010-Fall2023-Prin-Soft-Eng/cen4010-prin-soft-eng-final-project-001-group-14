@@ -153,14 +153,14 @@
                 var dogCard = `
                   <div class="swiper-slide">
                     <div class="card mt-3">
-                      <img src="${dog.photoURL}" class="card-img-top" alt="${dog.name}">
+                      <img src="${(dog.photoURL != null) ? dog.photoURL : "images/NoImage.webp"}" class="card-img-top" alt="${dog.name}">
                       <div class="card-body">
                         <h5 class="card-title">${dog.name}</h5>
                         <p class="card-text">ID: ${dog.id}</p>
                         <p class="card-text">Breed: ${dog.breed.primary}${dog.breed.secondary ? `/${dog.breed.secondary}` : ''}</p>
                         <p class="card-text">Age: ${dog.age}</p>
                         <p class="card-text">Sex: ${dog.sex}</p>
-                        <p class="card-text overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Description: ${dog.description}</p>
+                        <p class="card-text overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Description: ${(dog.description != null) ? dog.description : "N/A"}</p>
                         <a href="${dog.webpage}" class="btn btn-primary" target="_blank">Learn More</a>
                         <!-- Add Favorite button with a click event handler -->
                         <button class="btn btn-outline-danger btn-favorite" data-dog-id="${dog.id}">Favorite</button>
