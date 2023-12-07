@@ -3,9 +3,12 @@
 // documentation.js
 // 11/02/23
 
-const mongoose = require('mongoose')
-const express = require('express')
-const app = express()
+const mongoose = require('mongoose');
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const { User, Dog } = require('./dog_db'); // Adjust the path as necessary
+
+const app = express();
 
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -93,7 +96,7 @@ function ExtractRequiredData(animal) {
     extractedData.photoURL = animal.photos[0].full;
   else
     extractedData.photoURL = null;
-  
+
   return extractedData;
 }
 
@@ -146,7 +149,51 @@ function ExtractRequiredData(animal) {
  *       201:
  *         description: Success. Created account.
  */
-app.post('/accounts', function (req, res) {});
+
+app.post('/accounts', async (req, res) => {
+  try {
+    const { email, pswd, fName, lName, age, ZipCode } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send({ error: 'Email already in use' });
+    }
+
+    const user = new User({ email, pswd, fName, lName, age, ZipCode });
+    await user.save();
+
+    // res.status(201).send({ message: 'Account created successfully' });
+    res.redirect('/index.html');
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, pswd } = req.body;
+    console.log('Login attempt:', email, pswd); // Debugging line
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).send({ error: 'User not found' });
+    }
+
+    const isMatch = await user.comparePassword(pswd);
+    if (!isMatch) {
+      // return res.status(401).send({ error: 'Invalid password' });
+      res.redirect('/login.html');
+    }
+
+    // Proceed with login success logic
+    // res.status(200).send({ message: 'Login successful', userId: user._id });
+    res.redirect('/index.html');
+  } catch (error) {
+    console.error('Login error:', error); // Debugging line
+    res.status(400).send({ error: 'Login error' });
+  }
+});
 
 /**
  * @swagger
@@ -168,7 +215,7 @@ app.post('/accounts', function (req, res) {});
  *         schema:
  *           type: string
  *     responses:
- *       200: 
+ *       200:
  *         description: Success. User signed in and ID sucessfully retrieved.
  *       404:
  *         description: Error. Could not find user account.
@@ -189,7 +236,7 @@ app.get('/accounts', function (req, res) {});
  *         schema:
  *           type: string
  *     responses:
- *       200: 
+ *       200:
  *         description: Success. User account information retrieved.
  *       404:
  *         description: Error. Could not find user account.
@@ -216,7 +263,7 @@ app.get('/accounts/:account_ID', function (req, res) {});
  *         schema:
  *           type: string
  *     responses:
- *       200: 
+ *       200:
  *         description: Success. Dog added to account's favorites.
  *       404:
  *         description: Error. Could not add dog to account's favorites.
@@ -279,7 +326,7 @@ app.put('/accounts/:account_ID', function (req, res) {})
  *         schema:
  *           type: string
  *     responses:
- *       200: 
+ *       200:
  *         description: Success. A list of dogs (near) fitting the criteria have been enumerated.
  *       404:
  *         description: Error. Could not enumerate list of nearby dogs.
@@ -337,9 +384,9 @@ app.get('/dogs', function (req, res) {
  *         in: path
  *         required: true
  *         schema:
- *           type: string            
+ *           type: string
  *     responses:
- *       200: 
+ *       200:
  *         description: Success. The dog has been retrieved.
  *       404:
  *         description: Error. Could not find the dog associated with this ID.
@@ -347,7 +394,7 @@ app.get('/dogs', function (req, res) {
 app.get('/dogs/:dog_ID', function (req, res) {
   if (!req.params.hasOwnProperty("dog_ID"))
     throw new Error("dog_ID param entry missing.");
-  
+
   GetPetFinderToken().then(token => {
     axios.get(`${petFinderURL}/animals/${req.params.dog_ID}`, {
       headers: {
