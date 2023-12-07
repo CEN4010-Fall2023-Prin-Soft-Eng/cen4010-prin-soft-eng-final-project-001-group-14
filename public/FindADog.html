@@ -49,18 +49,22 @@
     }
 
     .swiper-container {
-      max-width: 400px; /* Adjust the max-width as needed */
-      margin: 20px auto;
+      max-width: 600px; /* Adjust the max-width as needed */
+      margin: 20px 60px 20px auto;
+      overflow: hidden;
+      overflow-y: auto hidden; /* Enable vertical scrolling */
+      max-height: 800px; /* Set a maximum height for the swiper container */
     }
-
+    
     .swiper-slide {
-      width: 200px; /* Adjust the width as needed */
+      width: 100%; /* Adjust the width as needed */
       margin-right: 10px;
-      margin-bottom: 10px; /* Add margin-bottom to separate cards vertically */
+      margin-bottom: 10px;
     }
-
+    
     .card {
-      width: 100%;
+      width: calc(50% - 20px); /* Adjusted width to match find button and add some spacing */
+      margin-right: 20px; /* Add some spacing between cards */
       border: 1px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
@@ -72,7 +76,7 @@
     }
 
     .card img {
-      max-width: 100%;
+      max-width: auto;
       height: auto;
       border-bottom: 1px solid #ccc;
       transition: transform 0.3s;
@@ -165,6 +169,19 @@
     /* Add this style to set the width of the favoritedDogs dropdown */
     #favoritedDogs {
       width: 100%; /* You can adjust the width as needed */
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      top: 50%; /* Position the buttons at the vertical center of the container */
+      transform: translateY(-50%); /* Adjust the position relative to the container height */
+    }
+    
+    .swiper-button-next {
+      right: 10px; /* Adjust the right margin for the next button */
+    }
+    
+    .swiper-button-prev {
+      left: 10px; /* Adjust the left margin for the previous button */
     }
 
   </style>
