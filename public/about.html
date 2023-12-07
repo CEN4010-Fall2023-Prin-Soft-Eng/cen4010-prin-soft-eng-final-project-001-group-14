@@ -124,12 +124,56 @@
                   <a class="nav-link" href="FindADog.html">Find Your Dog</a>
                 </li>
                 <li class="nav-item">
-                  <form class="form-inline my-2 my-lg-0">
+                  <form class="form-inline my-2 my-lg-0" id="dogSearch" onsubmit="searchDog();return false">
                     <div class="search-box">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <input class="form-control mr-sm-2" id="dogIdInput" type="search" placeholder="Search by Dog ID" aria-label="Search">
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                   </form>
+                  <script>
+                    function getURL() {
+                      let url = window.location.href;
+                      
+                      let termLength = 0;
+                      let termPosition = 0;
+                      let term1 = "http://";
+                      let term2 = "https://";
+                      if ((termPosition = url.indexOf(term1) != -1))
+                        termLength = term1.length;
+                      else {
+                        termLength = term2.length;
+                        termPosition = url.indexOf(term2);
+                      }
+
+                      let isolatedURL = url.substring(termLength, url.length);
+                      isolatedURL = isolatedURL.substring(0, isolatedURL.indexOf("/"))
+
+                      if (termLength == term1.length)
+                        isolatedURL = term1 + isolatedURL;
+                      else
+                        isolatedURL = term2 + isolatedURL;
+          
+                      return isolatedURL;
+                    }
+
+                    function searchDog() {
+                      let url = getURL();
+                      let dogID = $("#dogIdInput").val();
+                      
+                      $.ajax({
+                        url: `${url}/dogs/${dogID}`,
+                        type: "get",
+                        dataType: "text",
+                        success: function(response) {
+                          let dogInfo = JSON.parse(response);
+                          window.location.href = dogInfo.webpage;
+                        },
+                        error: function(response) {
+                          $("#dogIdInput").val("Error! Invalid ID.");
+                        }
+                      });
+                    }
+                  </script>
                 </li>
               </ul>
             </div>
@@ -160,12 +204,8 @@
               </h2>
             </div>
             <p>
-              This is a simple, easy to use website that allows users to find dogs they like. It uses a listing format to help users find a dog of their liking. 
+              This is a simple, easy to use website that allows users to find dogs they like. It uses a listing format that allows the user to swipe through and view dogs around their location. 
             </p>
-            <!--<div class="btn-box">
-              <a href="FindADog.html">
-                Find A Dog
-              </a>-->
             </div>
           </div>
         </div>
@@ -189,116 +229,95 @@
               </h2>
             </div>
             <p>
-              If you find a dog you love, click the favorite button to add to your list. To search dogs by ID, use the search bar and be directly taken to the dogs page. Click the button below to get started!
+              The website requires users to input a zipcode for a general location, along with a range value that determines the max distance that will be searched. Users can select a specific breed, age range, gender, size and color if wanted. 
             </p>
-            <div class="btn-box">
-              <a href="FindADog.html">
-                Find A Dog
-              </a>
-            </div>
           </div>
         </div>
       </div>
+      </div>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/pup.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  Viewing
+                </h2>
+              </div>
+              <p>
+                If you find a dog you love, click the favorite button to add to your list. You will be able to view the dog in your favorites list and be taken to the dogs webpage. Click the button below to get started!
+              </p>
+              <div class="btn-box">
+                <a href="FindADog.html">
+                  Find A Dog
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/pups.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  ID Search
+                </h2>
+              </div>
+              <p>
+                If the user has the ID of a dog they like, they can skip going to the Find Your Dog section and input the ID in the searchbar. It will take the user to the dogs webpage immediately.  
+              </p>
+            </div>
+          </div>
+        </div>
+    </div>
+    <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/run.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  Creators
+                </h2>
+              </div>
+              <p>
+                Gabriel Garcia, Alex Major, John Sinfuego and Ian Blankenship collaborated to make Find-A-Dog. 
+              </p>
+            </div>
+          </div>
+        </div>
     </div>
   </section>
 
 
 
   <!-- end about section -->
-
-  <!-- info section -->
-  <section class="info_section ">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="info_logo">
-            <a class="navbar-brand" href="index.html">
-              <span>
-              
-              </span>
-            </a>
-            <p>
-             
-            </p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="info_links">
-            <h5>
-              
-            </h5>
-            <ul>
-              <li>
-                <a href="">
-                 
-                </a>
-              </li>
-              <li>
-                <a href="">
-                 
-                </a>
-              </li>
-              <li>
-                <a href="">
-                
-                </a>
-              </li>
-              <li>
-                <a href="">
-                
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="info_info">
-            <h5>
-            
-            </h5>
-          </div>
-          <div class="info_contact">
-            <a href="" class="">
-            
-              <span>
-               
-              </span>
-            </a>
-            <a href="" class="">
-             
-              <span>
-              
-              </span>
-            </a>
-            <a href="" class="">
-            
-              <span>
-             
-              </span>
-            </a>
-          </div>
-        </div>
-    
-      
-            <h5>
-        
-            </h5>
-            <form action="#">
-      
-              <button>
-          
-              </button>
-            </form>
-        
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end info_section -->
+ 
 
 
 
