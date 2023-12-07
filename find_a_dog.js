@@ -5,6 +5,7 @@
 
 const mongoose = require('mongoose');
 const express = require('express');
+const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { User, Dog } = require('./dog_db'); // Adjust the path as necessary
 
@@ -100,6 +101,14 @@ function ExtractRequiredData(animal) {
   return extractedData;
 }
 
+function isAuthenticated(req, res, next) {
+  if (req.session.userId) {
+    next();
+  } else {
+    res.redirect('/login.html');
+  }
+}
+
 /**
  * @swagger
  * /accounts:
@@ -150,6 +159,13 @@ function ExtractRequiredData(animal) {
  *         description: Success. Created account.
  */
 
+app.use(session({
+  secret: '3b2b1e5f4c9a46d9b50b6244e5f05d5b',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
 app.post('/accounts', async (req, res) => {
   try {
     const { email, pswd, fName, lName, age, ZipCode } = req.body;
@@ -173,25 +189,16 @@ app.post('/accounts', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const { email, pswd } = req.body;
-    console.log('Login attempt:', email, pswd); // Debugging line
-
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).send({ error: 'User not found' });
-    }
-
-    const isMatch = await user.comparePassword(pswd);
-    if (!isMatch) {
-      // return res.status(401).send({ error: 'Invalid password' });
+    if (!user || !(await user.comparePassword(pswd))) {
       res.redirect('/login.html');
+    } else {
+      req.session.userId = user._id; // Storing user ID in session
+      res.redirect('/dashboard.html'); // Redirect to dashboard
     }
-
-    // Proceed with login success logic
-    // res.status(200).send({ message: 'Login successful', userId: user._id });
-    res.redirect('/index.html');
   } catch (error) {
-    console.error('Login error:', error); // Debugging line
-    res.status(400).send({ error: 'Login error' });
+    console.error('Login error:', error);
+    res.redirect('/login.html');
   }
 });
 
@@ -337,6 +344,35 @@ app.get('/dogs/:dog_ID', function (req, res) {
   .catch(error => {
     res.status(404).send(error.message);
     console.error(error);
+  });
+});
+
+// Route to serve FindADog.html only if authenticated
+app.get('/FindADog.html', isAuthenticated, (req, res) => {
+  res.sendFile(__dirname + '/public/FindADog.html');
+});
+
+// home route
+app.get('/home', (req, res) => {
+  if (req.session && req.session.userId) {
+    // If user is logged in, redirect to dashboard
+    res.redirect('/dashboard.html');
+  } else {
+    // If user is not logged in, redirect to guest homepage
+    res.redirect('/index.html');
+  }
+});
+
+app.get('/logout', (req, res) => {
+  // Destroy the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error in destroying session:', err);
+      return res.status(500).send('An error occurred while logging out');
+    }
+
+    // Redirect to the login page after successful logout
+    res.redirect('/login.html');
   });
 });
 
