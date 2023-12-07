@@ -1,0 +1,207 @@
+/* CSS for the search box */
+.search-box {
+    position: relative;
+    margin-top: 20px;
+    }
+
+.search-box input[type="search"] {
+    background: transparent;
+    border: 2px solid #000000;
+    color: #ffffff;
+    width: 0;
+    padding: 10px;
+    transition: width 0.4s ease-in-out;
+    margin-right: 10px;
+    }
+
+.search-box input[type="search"]::placeholder {
+    color: #fff;
+}
+
+.search-box input[type="search"]:focus {
+    width: 200px;
+    outline: none;
+}
+
+.search-box .btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    transition: color 0.4s ease-in-out;
+}
+
+.search-box .btn:hover {
+    color: #000000;
+}
+
+.swiper-container {
+    max-width: 600px; /* Adjust the max-width as needed */
+    margin: 20px 60px 20px auto;
+    overflow: hidden;
+    overflow-y: auto hidden; /* Enable vertical scrolling */
+    max-height: 800px; /* Set a maximum height for the swiper container */
+}
+
+.swiper-slide {
+    width: 100%; /* Adjust the width as needed */
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.card {
+    width: calc(50% - 20px); /* Adjusted width to match find button and add some spacing */
+    margin-right: 20px; /* Add some spacing between cards */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Added hover effect */
+}
+
+.card img {
+    max-width: auto;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    transition: transform 0.3s;
+}
+
+.card:hover img {
+    transform: scale(1.1); /* Added hover effect */
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 16px; /* Adjusted font size */
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.card-text {
+    font-size: 14px; /* Adjusted font size */
+    margin-bottom: 5px;
+    color: #555555;
+}
+
+.btn-primary {
+    font-size: 14px; /* Adjusted font size */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: inline-block;
+    font-size: 18px;
+    margin-right: 10px; /* Add some spacing between labels */
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #007bff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust form controls to be inline */
+.form-group .form-control {
+    display: inline-block;
+    width: auto; /* Set to your preferred width */
+    margin-bottom: 15px; /* Add some spacing between controls */
+}
+
+/* Style for the Find button */
+.btn-find {
+    display: inline-block;
+    margin-top: 15px; /* Add some spacing between Find and Favorited Dogs */
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 15px 20px; /* Adjusted width */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-size: 18px;
+}
+
+.btn-find:hover {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.favorited-dogs {
+    text-align: center;
+    margin-top: 20px; /* Add margin-top for spacing */
+}
+
+.favorited-dogs label {
+    display: block; /* Ensure the label takes full width */
+    font-size: 18px;
+    margin-bottom: 10px; /* Add some spacing below the label */
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #007bff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Add this style to set the width of the favoritedDogs dropdown */
+#favoritedDogs {
+    width: 100%; /* You can adjust the width as needed */
+}
+.swiper-slide {
+    position: relative;
+    width: calc(50% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; /* Increase the width as needed */
+    height: 40px; /* Increase the height as needed */
+    background-color: transparent; /* Remove background color */
+    color: #fff !important; /* Set arrow color to white with !important */
+    border: none;
+    border-radius: 0; /* Remove border radius */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    font-size: 100px;
+}
+
+.swiper-button-next::before, .swiper-button-prev::before {
+    font-family: 'FontAwesome';
+}
+
+.swiper-button-next::before {
+    content: '\f105';
+}
+
+.swiper-button-prev::before {
+    content: '\f104';
+}
+.swiper-button-next {
+    left: 1834px !important; /* Adjust the left position as needed */
+}
+
+.swiper-button-prev {
+    right: 400px !important;
+}
+
+
+#results{
+    color: white;
+    font-size: 25px;
+}

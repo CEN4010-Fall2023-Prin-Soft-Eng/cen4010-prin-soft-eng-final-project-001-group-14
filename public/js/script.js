@@ -63,3 +63,46 @@ document.getElementById('pet-form').addEventListener('submit', function (event) 
   // Call fetchDogData with user input
   fetchDogData(zip, radius, set);
 });
+
+function getURL() {
+  let url = window.location.href;
+  
+  let termLength = 0;
+  let termPosition = 0;
+  let term1 = "http://";
+  let term2 = "https://";
+  if ((termPosition = url.indexOf(term1) != -1))
+    termLength = term1.length;
+  else {
+    termLength = term2.length;
+    termPosition = url.indexOf(term2);
+  }
+
+  let isolatedURL = url.substring(termLength, url.length);
+  isolatedURL = isolatedURL.substring(0, isolatedURL.indexOf("/"))
+
+  if (termLength == term1.length)
+    isolatedURL = term1 + isolatedURL;
+  else
+    isolatedURL = term2 + isolatedURL;
+
+  return isolatedURL;
+}
+
+function searchDog() {
+  let url = getURL();
+  let dogID = $("#dogIdInput").val();
+  
+  $.ajax({
+    url: `${url}/dogs/${dogID}`,
+    type: "get",
+    dataType: "text",
+    success: function(response) {
+      let dogInfo = JSON.parse(response);
+      window.location.href = dogInfo.webpage;
+    },
+    error: function(response) {
+      $("#dogIdInput").val("Error! Invalid ID.");
+    }
+  });
+}

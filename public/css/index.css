@@ -1,0 +1,36 @@
+/* CSS for the search box */
+.search-box {
+    position: relative;
+    margin-top: 20px;
+}
+
+.search-box input[type="search"] {
+    background: transparent;
+    border: 2px solid #000000;
+    color: #ffffff;
+    width: 0;
+    padding: 10px;
+    transition: width 0.4s ease-in-out;
+    margin-right: 10px;
+}
+
+.search-box input[type="search"]::placeholder {
+    color: #fff; 
+}
+
+.search-box input[type="search"]:focus {
+    width: 200px; /* Adjust width as needed */
+    outline: none;
+}
+
+.search-box .btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    transition: color 0.4s ease-in-out;
+}
+
+.search-box .btn:hover {
+    color: #000000;
+}

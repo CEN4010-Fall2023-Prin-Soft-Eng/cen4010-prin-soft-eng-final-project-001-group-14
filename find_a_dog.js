@@ -197,81 +197,6 @@ app.post('/login', async (req, res) => {
 
 /**
  * @swagger
- * /accounts:
- *   get:
- *     summary: Signs a user into their account and returns their account ID.
- *     description: Use this endpoint to sign a user into their account.
- *     parameters:
- *       - name: email
- *         description: The user's email.
- *         in: formData
- *         required: true
- *         schema:
- *           type: string
- *       - name: password
- *         description: The user's password.
- *         in: formData
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Success. User signed in and ID sucessfully retrieved.
- *       404:
- *         description: Error. Could not find user account.
- */
-app.get('/accounts', function (req, res) {});
-
-/**
- * @swagger
- * /accounts/{account_ID}:
- *   get:
- *     summary: Returns the information associated with an account by its ID.
- *     description: Use this endpoint to look up an account's info by its ID.
- *     parameters:
- *       - name: account_ID
- *         description: The ID associated with the account.
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Success. User account information retrieved.
- *       404:
- *         description: Error. Could not find user account.
- */
-app.get('/accounts/:account_ID', function (req, res) {});
-
-/**
- * @swagger
- * /accounts/{account_ID}:
- *   put:
- *     summary: Adds a dog to the favorites array in an account.
- *     description: Use this endpoint to add a favorite to a user's account.
- *     parameters:
- *       - name: account_ID
- *         description: The ID associated with the account.
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *       - name: dog_ID
- *         description: The ID of the dog to add to favorites.
- *         in: formData
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Success. Dog added to account's favorites.
- *       404:
- *         description: Error. Could not add dog to account's favorites.
- */
-app.put('/accounts/:account_ID', function (req, res) {})
-
-/**
- * @swagger
  * /dogs:
  *   get:
  *     summary: Enumerates a list of dogs that meets the user's criteria in the nearby area using the external API.
@@ -430,10 +355,3 @@ mongoose.connect(uri)
       });
     })
     .catch(err => console.log(err));
-
-// commented out and moved into mongoose.connect block as db needs to be functional before server starts
-// var port = process.env.PORT || 5678;
-// app.listen(port); //start the server
-// console.log('Server is running...');
-// console.log('Webapp:   http://localhost:5678/');
-// console.log('API Docs: http://localhost:5678/api-docs');

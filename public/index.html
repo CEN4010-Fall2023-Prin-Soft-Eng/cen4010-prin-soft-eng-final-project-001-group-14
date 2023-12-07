@@ -1,330 +1,184 @@
 <!DOCTYPE html>
 <html>
-<!-- Make sure to include Font Awesome in your HTML -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<style>
-  /* CSS for the search box */
-  .search-box {
-    position: relative;
-    margin-top: 20px;
-  }
-
-  .search-box input[type="search"] {
-    background: transparent;
-    border: 2px solid #000000;
-    /*border-bottom: 5px solid #000000;*/
-    color: #ffffff;
-    width: 0;
-    padding: 10px;
-    transition: width 0.4s ease-in-out;
-    margin-right: 10px;
-  }
-
-  .search-box input[type="search"]::placeholder {
-    color: #fff; 
-  }
-
-  .search-box input[type="search"]:focus {
-    width: 200px; /* Adjust width as needed */
-    outline: none;
-  }
-
-  .search-box .btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    transition: color 0.4s ease-in-out;
-  }
-
-  .search-box .btn:hover {
-    color: #000000;
-  }
-</style>
-
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-
-  <title>Find A Dog</title>
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-</head>
-
-<body>
-  <div class="hero_area">
-    <!-- header section strats -->
-    <div class="hero_bg_box">
-      <div class="img-box">
-        <img src="images/Dog2.png" alt="">
-      </div>
-    </div>
-
-    <header class="header_section">
-      <div class="header_top">
-        <div class="container-fluid">
-          <div class="contact_link-container">
-            <a href="" class="contact_link1">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>
-                Find Your Dog 
-              </span>
-            </a>
-            <a href="" class="contact_link2">
-            
-              <span>
-              
-              </span>
-            </a>
-            <a href="" class="contact_link3">
-             
-              <span>
-              
-              </span>
-            </a>
-          </div>
+  <head>
+    <title>Find A Dog</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div class="hero_area">
+      <div class="hero_bg_box">
+        <div class="img-box">
+          <img src="images/Dog2.png" alt="">
         </div>
       </div>
-      <div class="header_bottom">
-        <div class="container-fluid">
-          <nav class="navbar navbar-expand-lg custom_nav-container">
-            <a class="navbar-brand" href="index.html">
-              <span>
-                Find-A-Dog
-              </span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class=""></span>
-            </button>
-
-            <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="FindADog.html">Find Your Dog</a>
-                </li>
-                <li class="nav-item">
-                  <form class="form-inline my-2 my-lg-0" id="dogSearch" onsubmit="searchDog();return false">
-                    <div class="search-box">
-                      <input class="form-control mr-sm-2" id="dogIdInput" type="search" placeholder="Search by Dog ID" aria-label="Search">
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
-                  </form>
-                  <script>
-                    function getURL() {
-                      let url = window.location.href;
-                      
-                      let termLength = 0;
-                      let termPosition = 0;
-                      let term1 = "http://";
-                      let term2 = "https://";
-                      if ((termPosition = url.indexOf(term1) != -1))
-                        termLength = term1.length;
-                      else {
-                        termLength = term2.length;
-                        termPosition = url.indexOf(term2);
-                      }
-
-                      let isolatedURL = url.substring(termLength, url.length);
-                      isolatedURL = isolatedURL.substring(0, isolatedURL.indexOf("/"))
-
-                      if (termLength == term1.length)
-                        isolatedURL = term1 + isolatedURL;
-                      else
-                        isolatedURL = term2 + isolatedURL;
-          
-                      return isolatedURL;
-                    }
-
-                    function searchDog() {
-                      let url = getURL();
-                      let dogID = $("#dogIdInput").val();
-                      
-                      $.ajax({
-                        url: `${url}/dogs/${dogID}`,
-                        type: "get",
-                        dataType: "text",
-                        success: function(response) {
-                          let dogInfo = JSON.parse(response);
-                          window.location.href = dogInfo.webpage;
-                        },
-                        error: function(response) {
-                          $("#dogIdInput").val("Error! Invalid ID.");
-                        }
-                      });
-                    }
-                  </script>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </header>
-    <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section ">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-7">
-                  <div class="detail-box">
-                    <h1>
-                      Find a dog just for you <br>
-                      <span>
-                      </span>
-                    </h1>
-                    <p>
-                      Dogs will be categorized by breed, gender, and age to help you find the perfect dog.  
-                    </p>
-                    <div class="btn-box">
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-7">
-                  <div class="detail-box">
-                    <h1>
-                       Bring home a dog<br>
-                     
-                    </h1>
-                    <p>
-                      All dogs deserve a place to call home, as well as a loving and affectionate family. Bring a pet home today!
-                    </p>
-                    <div class="btn-box">
-                     
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-7">
-                  <div class="detail-box">
-                    <h1>
-                      Easy to use <br>
-                     
-                    </h1>
-                    <p>
-                      The website allows you to swipe through lists of dogs to view. Click the About button to learn more about the website!
-                    </p>
-                    <div class="btn-box">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container idicator_container">
-          <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          </ol>
-        </div>
-      </div>
-    </section>
-    <!-- end slider section -->
-  </div>
-
-  <!-- about section -->
-
-  <section class="about_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 px-0">
-          <div class="img_container">
-            <div class="img-box">
-              <img src="images/doggo.jpg" alt="" />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 px-0">
-          <div class="detail-box">
-            <div class="heading_container ">
-              <h2>
-                GET STARTED
-              </h2>
-            </div>
-            <p>
-              Login or create an account to start finding your future dog today!
-            </p>
-            <div class="btn-box">
-              <a href="login.html">
-                Login
+      <header class="header_section">
+        <div class="header_top">
+          <div class="container-fluid">
+            <div class="contact_link-container">
+              <a href="" class="contact_link1">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Find Your Dog 
+                </span>
+              </a>
+              <a href="" class="contact_link2">
+                <span></span>
+              </a>
+              <a href="" class="contact_link3">
+                <span></span>
               </a>
             </div>
           </div>
         </div>
-      </div>
+        <div class="header_bottom">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+              <a class="navbar-brand" href="index.html">
+                <span>
+                  Find-A-Dog
+                </span>
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class=""></span>
+              </button>
+              <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="FindADog.html">Find Your Dog</a>
+                  </li>
+                  <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0" id="dogSearch" onsubmit="searchDog();return false">
+                      <div class="search-box">
+                        <input class="form-control mr-sm-2" id="dogIdInput" type="search" placeholder="Search by Dog ID" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                      </div>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <section class=" slider_section ">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="detail-box">
+                      <h1>
+                        Find a dog just for you <br>
+                        <span></span>
+                      </h1>
+                      <p>
+                        Dogs will be categorized by breed, gender, and age to help you find the perfect dog.  
+                      </p>
+                      <div class="btn-box">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item ">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="detail-box">
+                      <h1>
+                        Bring home a dog<br>
+                      </h1>
+                      <p>
+                        All dogs deserve a place to call home, as well as a loving and affectionate family. Bring a pet home today!
+                      </p>
+                      <div class="btn-box">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item ">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="detail-box">
+                      <h1>
+                        Easy to use <br>
+                      </h1>
+                      <p>
+                        The website allows you to swipe through lists of dogs to view. Click the About button to learn more about the website!
+                      </p>
+                      <div class="btn-box">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container idicator_container">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-
-  <!-- end about section -->
-
-  <!-- service section -->
-
- 
-
-  <!-- end service section -->
-
-
-  <!-- client section -->
-
-
-  <!-- end client section -->
-
-
-  <!-- team section -->
-
- 
-
-
-
-
-
-
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="js/custom.js"></script>
-</body>
-
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/doggo.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  GET STARTED
+                </h2>
+              </div>
+              <p>
+                Login or create an account to start finding your future dog today!
+              </p>
+              <div class="btn-box">
+                <a href="login.html">
+                  Login
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

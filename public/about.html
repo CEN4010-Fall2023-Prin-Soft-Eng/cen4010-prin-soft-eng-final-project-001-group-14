@@ -1,239 +1,126 @@
 <!DOCTYPE html>
 <html>
-<!-- Make sure to include Font Awesome in your HTML -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<style>
-  /* CSS for the search box */
-  .search-box {
-    position: relative;
-    margin-top: 20px;
-  }
-
-  .search-box input[type="search"] {
-    background: transparent;
-    border: 2px solid #000000;
-    /*border-bottom: 5px solid #000000;*/
-    color: #ffffff;
-    width: 0;
-    padding: 10px;
-    transition: width 0.4s ease-in-out;
-    margin-right: 10px;
-  }
-
-  .search-box input[type="search"]::placeholder {
-    color: #fff; 
-  }
-
-  .search-box input[type="search"]:focus {
-    width: 200px; /* Adjust width as needed */
-    outline: none;
-  }
-
-  .search-box .btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    transition: color 0.4s ease-in-out;
-  }
-
-  .search-box .btn:hover {
-    color: #000000;
-  }
-</style>
-
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-
-  <title>Find a Dog</title>
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-</head>
-
-<body class="sub_page">
-  <div class="hero_area">
-    <!-- header section strats -->
-    <div class="hero_bg_box">
-      <div class="img-box">
-        <img src="images/hero-bg.jpg" alt="">
+  <head>
+    <title>Find a Dog</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/responsive.css" rel="stylesheet"/>
+    <link href="css/about.css" rel="stylesheet"/>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/script.js"></script>
+  </head>
+  <body class="sub_page">
+    <div class="hero_area">
+      <div class="hero_bg_box">
+        <div class="img-box">
+          <img src="images/hero-bg.jpg" alt="">
+        </div>
       </div>
-    </div>
-
-    <header class="header_section">
-      <div class="header_top">
-        <div class="container-fluid">
-          <div class="contact_link-container">
-            <a href="" class="contact_link1">
+      <header class="header_section">
+        <div class="header_top">
+          <div class="container-fluid">
+            <div class="contact_link-container">
+              <a href="" class="contact_link1">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
                 Find Your Dog
               </span>
-            </a>
-            <a href="" class="contact_link2">
-              
-            </a>
-            <a href="" class="contact_link3">
-              
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="header_bottom">
-        <div class="container-fluid">
-          <nav class="navbar navbar-expand-lg custom_nav-container">
-            <a class="navbar-brand" href="index.html">
-              <span>
-                
-              </span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class=""></span>
-            </button>
-
-            <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="FindADog.html">Find Your Dog</a>
-                </li>
-                <li class="nav-item">
-                  <form class="form-inline my-2 my-lg-0" id="dogSearch" onsubmit="searchDog();return false">
-                    <div class="search-box">
-                      <input class="form-control mr-sm-2" id="dogIdInput" type="search" placeholder="Search by Dog ID" aria-label="Search">
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
-                  </form>
-                  <script>
-                    function getURL() {
-                      let url = window.location.href;
-                      
-                      let termLength = 0;
-                      let termPosition = 0;
-                      let term1 = "http://";
-                      let term2 = "https://";
-                      if ((termPosition = url.indexOf(term1) != -1))
-                        termLength = term1.length;
-                      else {
-                        termLength = term2.length;
-                        termPosition = url.indexOf(term2);
-                      }
-
-                      let isolatedURL = url.substring(termLength, url.length);
-                      isolatedURL = isolatedURL.substring(0, isolatedURL.indexOf("/"))
-
-                      if (termLength == term1.length)
-                        isolatedURL = term1 + isolatedURL;
-                      else
-                        isolatedURL = term2 + isolatedURL;
-          
-                      return isolatedURL;
-                    }
-
-                    function searchDog() {
-                      let url = getURL();
-                      let dogID = $("#dogIdInput").val();
-                      
-                      $.ajax({
-                        url: `${url}/dogs/${dogID}`,
-                        type: "get",
-                        dataType: "text",
-                        success: function(response) {
-                          let dogInfo = JSON.parse(response);
-                          window.location.href = dogInfo.webpage;
-                        },
-                        error: function(response) {
-                          $("#dogIdInput").val("Error! Invalid ID.");
-                        }
-                      });
-                    }
-                  </script>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </header>
-    <!-- end header section -->
-  </div>
-
-  <!-- about section -->
-
-  <section class="about_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 px-0">
-          <div class="img_container">
-            <div class="img-box">
-              <img src="images/dawg.jpg" alt="" />
+              <a href="" class="contact_link2"></a>
+              <a href="" class="contact_link3"></a>
             </div>
           </div>
         </div>
-        <div class="col-md-6 px-0">
-          <div class="detail-box">
-            <div class="heading_container ">
-              <h2>
-                Welcome
-              </h2>
-            </div>
-            <p>
-              This is a simple, easy to use website that allows users to find dogs they like. It uses a listing format that allows the user to swipe through and view dogs around their location. 
-            </p>
-            </div>
+        <div class="header_bottom">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+              <a class="navbar-brand" href="index.html"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class=""></span>
+              </button>
+              <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="FindADog.html">Find Your Dog</a>
+                  </li>
+                  <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0" id="dogSearch" onsubmit="searchDog();return false">
+                      <div class="search-box">
+                        <input class="form-control mr-sm-2" id="dogIdInput" type="search" placeholder="Search by Dog ID" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                      </div>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
         </div>
-      </div>
+      </header>
     </div>
-    <br>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 px-0">
-          <div class="img_container">
-            <div class="img-box">
-              <img src="images/dogs.png" alt="" />
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/dawg.jpg" alt="" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 px-0">
-          <div class="detail-box">
-            <div class="heading_container ">
-              <h2>
-                How To Use
-              </h2>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  Welcome
+                </h2>
+              </div>
+              <p>
+                This is a simple, easy to use website that allows users to find dogs they like. It uses a listing format that allows the user to swipe through and view dogs around their location. 
+              </p>
+              </div>
             </div>
-            <p>
-              The website requires users to input a zipcode for a general location, along with a range value that determines the max distance that will be searched. Users can select a specific breed, age range, gender, size and color if wanted. 
-            </p>
           </div>
         </div>
       </div>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 px-0">
+            <div class="img_container">
+              <div class="img-box">
+                <img src="images/dogs.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0">
+            <div class="detail-box">
+              <div class="heading_container ">
+                <h2>
+                  How To Use
+                </h2>
+              </div>
+              <p>
+                The website requires users to input a zipcode for a general location, along with a range value that determines the max distance that will be searched. Users can select a specific breed, age range, gender, size and color if wanted. 
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <br>
       <div class="container">
@@ -265,68 +152,53 @@
         </div>
         </div>
         <br>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 px-0">
-            <div class="img_container">
-              <div class="img-box">
-                <img src="images/pups.jpg" alt="" />
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 px-0">
+              <div class="img_container">
+                <div class="img-box">
+                  <img src="images/pups.jpg" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 px-0">
+              <div class="detail-box">
+                <div class="heading_container ">
+                  <h2>
+                    ID Search
+                  </h2>
+                </div>
+                <p>
+                  If the user has the ID of a dog they like, they can skip going to the Find Your Dog section and input the ID in the searchbar. It will take the user to the dogs webpage immediately.  
+                </p>
               </div>
             </div>
           </div>
-          <div class="col-md-6 px-0">
-            <div class="detail-box">
-              <div class="heading_container ">
-                <h2>
-                  ID Search
-                </h2>
-              </div>
-              <p>
-                If the user has the ID of a dog they like, they can skip going to the Find Your Dog section and input the ID in the searchbar. It will take the user to the dogs webpage immediately.  
-              </p>
-            </div>
-          </div>
-        </div>
-    </div>
-    <br>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 px-0">
-            <div class="img_container">
-              <div class="img-box">
-                <img src="images/run.jpg" alt="" />
+      </div>
+      <br>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 px-0">
+              <div class="img_container">
+                <div class="img-box">
+                  <img src="images/run.jpg" alt="" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 px-0">
-            <div class="detail-box">
-              <div class="heading_container ">
-                <h2>
-                  Creators
-                </h2>
+            <div class="col-md-6 px-0">
+              <div class="detail-box">
+                <div class="heading_container ">
+                  <h2>
+                    Creators
+                  </h2>
+                </div>
+                <p>
+                  Gabriel Garcia, Alex Major, John Sinfuego and Ian Blankenship collaborated to make Find-A-Dog. 
+                </p>
               </div>
-              <p>
-                Gabriel Garcia, Alex Major, John Sinfuego and Ian Blankenship collaborated to make Find-A-Dog. 
-              </p>
             </div>
           </div>
-        </div>
-    </div>
-  </section>
-
-
-
-  <!-- end about section -->
- 
-
-
-
-
-  
-
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="js/custom.js"></script>
-</body>
-
+      </div>
+    </section>
+  </body>
 </html>
