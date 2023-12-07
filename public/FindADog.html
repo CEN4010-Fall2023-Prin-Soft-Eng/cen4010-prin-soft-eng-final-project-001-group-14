@@ -184,6 +184,10 @@
       left: 10px; /* Adjust the left margin for the previous button */
     }
 
+    #results{
+      color: white;
+      font-size: 25px;
+    }
   </style>
 
   <!-- Additional head content from the header section you provided -->
@@ -377,7 +381,11 @@
               });
               addToFavorites(dogData);
             });
+            if (response.data.length === 0) {
+              $('#results').append('<p>No dogs found.</p>');
+            }
           })
+          
           .catch(function (error) {
             console.error('Error fetching data:', error)
           });
