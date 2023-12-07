@@ -170,19 +170,51 @@
     #favoritedDogs {
       width: 100%; /* You can adjust the width as needed */
     }
+    .swiper-slide {
+      position: relative;
+      width: calc(50% - 10px);
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
     .swiper-button-next,
     .swiper-button-prev {
-      top: 50%; /* Position the buttons at the vertical center of the container */
-      transform: translateY(-50%); /* Adjust the position relative to the container height */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px; /* Increase the width as needed */
+      height: 40px; /* Increase the height as needed */
+      background-color: transparent; /* Remove background color */
+      color: #fff !important; /* Set arrow color to white with !important */
+      border: none;
+      border-radius: 0; /* Remove border radius */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: absolute;
+      font-size: 100px;
     }
     
+    .swiper-button-next::before,
+    .swiper-button-prev::before {
+      font-family: 'FontAwesome';
+    }
+    
+    .swiper-button-next::before {
+      content: '\f105';
+    }
+    
+    .swiper-button-prev::before {
+      content: '\f104';
+    }
     .swiper-button-next {
-      right: 10px; /* Adjust the right margin for the next button */
+      left: 1834px !important; /* Adjust the left position as needed */
     }
     
     .swiper-button-prev {
-      left: 10px; /* Adjust the left margin for the previous button */
+      right: 400px !important;
     }
+
 
     #results{
       color: white;
@@ -222,78 +254,81 @@
     $(document).ready(function () {
       // Define an array to store favorited dog data
       var favoritedDogs = [];
-    
+  
+      // Counter to keep track of the current dog card index
+      var currentDogIndex = 0;
+  
       // Function to handle adding a dog to favorites
       function addToFavorites(dogData) {
         // Check if the dogData is not already in the favoritedDogs array
         if (!isDogInFavorites(dogData.id)) {
           // Add the dogData to the array
           favoritedDogs.push(dogData);
-    
+  
           // Save the updated favoritedDogs array to localStorage
           saveToLocalStorage();
-    
+  
           // Update the favorited dogs dropdown
           updateFavoritedDogsDropdown();
         }
       }
-    
+  
       // Function to check if a dog with a specific ID is already in favorites
       function isDogInFavorites(dogId) {
         return favoritedDogs.some(function (dog) {
           return dog.id === dogId;
         });
       }
-    
+  
       // Function to remove a dog from favorites
       function removeFromFavorites(dogId) {
         // Filter out the dog with the specified ID
         favoritedDogs = favoritedDogs.filter(function (dog) {
           return dog.id !== dogId;
         });
-      
+  
         // Save the updated favoritedDogs array to localStorage
         saveToLocalStorage();
-    
+  
         // Update the favorited dogs dropdown
         updateFavoritedDogsDropdown();
       }
-    
+  
       // Function to update the favorited dogs dropdown
       function updateFavoritedDogsDropdown() {
         var dropdown = $('#favoritedDogs');
-    
+  
         // Remove previous event listener to avoid multiple bindings
         dropdown.off('change');
-    
-         // Clear the dropdown before updating
+  
+        // Clear the dropdown before updating
         dropdown.empty();
-
+  
         // Add a default option
         dropdown.append('<option value="" disabled selected>Select a dog</option>');
-    
+  
         // Populate the dropdown with favorited dog data
         favoritedDogs.forEach(function (dog) {
           dropdown.append('<option value="' + dog.id + '">' + dog.name + '</option>');
         });
-    
+  
         // Add event listener to navigate to the selected dog's webpage in a new tab
         dropdown.on('change', function () {
           var selectedDog = favoritedDogs.find(function (dog) {
             return dog.id == dropdown.val();
           });
-    
+  
           if (selectedDog) {
             window.open(selectedDog.webpage, '_blank');
           }
         });
       }
-    
+  
       // Function to save the favoritedDogs array to localStorage
       function saveToLocalStorage() {
         localStorage.setItem('favoritedDogs', JSON.stringify(favoritedDogs));
       }
-    
+  
       // Function to load the favoritedDogs array from localStorage
       function loadFromLocalStorage() {
         var storedData = localStorage.getItem('favoritedDogs');
@@ -302,25 +337,28 @@
           updateFavoritedDogsDropdown();
         }
       }
-    
+  
       // Load favorited dogs from localStorage when the page loads
       loadFromLocalStorage();
-    
+  
       $('#pet-form').submit(function (e) {
         e.preventDefault();
-    
+  
+        // Reset the current dog index to 0 when a new search is performed
+        currentDogIndex = 0;
+  
         var animal = $('#animal').val();
         var zip = $('#zip').val();
         var radius = $('#radius').val();
         var set = parseInt($('#set').val(), 10) || undefined;
-    
+  
         // Additional parameters (optional)
         var breed = $('#breed').val();
         var sex = $('#sex').val();
         var age = $('#age').val();
         var size = $('#size').val();
         var color = $('#color').val();
-    
+  
         // Make an API request using Axios
         axios.get('/dogs', {
           params: {
@@ -338,31 +376,31 @@
           .then(function (response) {
             // Clear previous results
             $('#results').empty();
-    
+  
             // Display each dog in a neat format
             response.data.forEach(function (dog) {
               var dogCard = `
-              <div class="swiper-slide">
-                <div class="card mt-3">
-                  <img src="${dog.photoURL}" class="card-img-top" alt="${dog.name}">
-                  <div class="card-body">
-                    <h5 class="card-title">${dog.name}</h5>
-                    <p class="card-text">ID: ${dog.id}</p>
-                    <p class="card-text">Breed: ${dog.breed.primary}${dog.breed.secondary ? `/${dog.breed.secondary}` : ''}</p>
-                    <p class="card-text">Age: ${dog.age}</p>
-                    <p class="card-text">Sex: ${dog.sex}</p>
-                    <p class="card-text overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Description: ${dog.description}</p>
-                    <a href="${dog.webpage}" class="btn btn-primary" target="_blank">Learn More</a>
-                    <!-- Add Favorite button with a click event handler -->
-                    <button class="btn btn-outline-danger btn-favorite" data-dog-id="${dog.id}">Favorite</button>
+                <div class="swiper-slide">
+                  <div class="card mt-3">
+                    <img src="${dog.photoURL}" class="card-img-top" alt="${dog.name}">
+                    <div class="card-body">
+                      <h5 class="card-title">${dog.name}</h5>
+                      <p class="card-text">ID: ${dog.id}</p>
+                      <p class="card-text">Breed: ${dog.breed.primary}${dog.breed.secondary ? `/${dog.breed.secondary}` : ''}</p>
+                      <p class="card-text">Age: ${dog.age}</p>
+                      <p class="card-text">Sex: ${dog.sex}</p>
+                      <p class="card-text overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Description: ${dog.description}</p>
+                      <a href="${dog.webpage}" class="btn btn-primary" target="_blank">Learn More</a>
+                      <!-- Add Favorite button with a click event handler -->
+                      <button class="btn btn-outline-danger btn-favorite" data-dog-id="${dog.id}">Favorite</button>
+                    </div>
                   </div>
                 </div>
-              </div>
               `;
-    
+  
               $('#results').append(dogCard);
             });
-    
+  
             // Initialize Swiper
             var swiper = new Swiper('.swiper-container', {
               slidesPerView: 1,
@@ -371,8 +409,12 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
               },
+              initialSlide: currentDogIndex, // Set the initial slide index
             });
-    
+  
+            // Reset Swiper to the first card
+            swiper.slideTo(currentDogIndex, 0);
+  
             // Add click event handler for Favorite buttons
             $('.btn-favorite').click(function () {
               var dogId = $(this).data('dog-id');
@@ -381,11 +423,12 @@
               });
               addToFavorites(dogData);
             });
+  
             if (response.data.length === 0) {
               $('#results').append('<p>No dogs found.</p>');
             }
           })
-          
+  
           .catch(function (error) {
             console.error('Error fetching data:', error)
           });
